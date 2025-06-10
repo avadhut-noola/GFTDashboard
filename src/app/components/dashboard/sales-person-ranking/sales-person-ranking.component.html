@@ -36,7 +36,7 @@
         <td>
           <div class="progress-container">
             <p-progressBar 
-              [value]="person.Progress" 
+              [value]="person.Progress | number:'1.0-2'" 
               [showValue]="true" 
               unit="%" 
               [ngClass]="getProgressClass(person.Progress)">

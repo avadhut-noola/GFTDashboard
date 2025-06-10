@@ -59,7 +59,7 @@
           <td>{{ sale.grossSales | currency }}</td>
           <td>{{ sale.netSales | currency }}</td>
           <td>
-            <p-progressBar [value]="(sale.netSales / sale.grossSales) * 100" 
+            <p-progressBar [value]="(sale.netSales / sale.grossSales) * 100 | number:'1.0-2'" 
                           [showValue]="true" unit="%">
             </p-progressBar>
           </td>

@@ -1,0 +1,103 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f8f9fa;
+  color: #495057;
+  line-height: 1.6;
+}
+
+.text-center {
+  text-align: center;
+}
+
+// Custom PrimeNG overrides
+.p-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 12px;
+  
+  .p-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 12px 12px 0 0;
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .p-card-body {
+    padding: 1.5rem;
+  }
+}
+
+.p-table {
+  .p-table-header {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    font-weight: 600;
+  }
+  
+  .p-table-tbody > tr {
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: #f8f9fa;
+    }
+  }
+  
+  .p-table-thead > tr > th {
+    background: #e9ecef;
+    color: #495057;
+    font-weight: 600;
+    border-color: #dee2e6;
+  }
+}
+
+.p-progressbar {
+  .p-progressbar-value {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+}
+
+.p-tag {
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+// Responsive utilities
+@media (max-width: 768px) {
+  .layout-main {
+    padding: 1rem;
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #a8a8a8;
+  }
+}

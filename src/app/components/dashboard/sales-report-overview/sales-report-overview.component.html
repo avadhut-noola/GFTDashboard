@@ -1,0 +1,70 @@
+<p-card header="Sales Report Overview" styleClass="sales-overview-card">
+  <div class="metrics-grid">
+    <div class="metric-card gross-sales">
+      <div class="metric-icon">
+        <i class="pi pi-dollar"></i>
+      </div>
+      <div class="metric-content">
+        <h3>{{ totalGrossSales | currency }}</h3>
+        <p>Total Gross Sales</p>
+      </div>
+    </div>
+
+    <div class="metric-card net-sales">
+      <div class="metric-icon">
+        <i class="pi pi-chart-line"></i>
+      </div>
+      <div class="metric-content">
+        <h3>{{ totalNetSales | currency }}</h3>
+        <p>Total Net Sales</p>
+      </div>
+    </div>
+
+    <div class="metric-card sales-persons">
+      <div class="metric-icon">
+        <i class="pi pi-users"></i>
+      </div>
+      <div class="metric-content">
+        <h3>{{ totalSalesPersons }}</h3>
+        <p>Sales Persons</p>
+      </div>
+    </div>
+
+    <div class="metric-card average-sales">
+      <div class="metric-icon">
+        <i class="pi pi-calculator"></i>
+      </div>
+      <div class="metric-content">
+        <h3>{{ averageGrossSales | currency }}</h3>
+        <p>Average Gross Sales</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sales-table-container">
+    <p-table [value]="salesData" [paginator]="true" [rows]="10" 
+             [showCurrentPageReport]="true" responsiveLayout="scroll"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Sales Person</th>
+          <th>Gross Sales</th>
+          <th>Net Sales</th>
+          <th>Performance</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-sale>
+        <tr>
+          <td>{{ sale.firstName }} {{ sale.lastName }}</td>
+          <td>{{ sale.grossSales | currency }}</td>
+          <td>{{ sale.netSales | currency }}</td>
+          <td>
+            <p-progressBar [value]="(sale.netSales / sale.grossSales) * 100" 
+                          [showValue]="true" unit="%">
+            </p-progressBar>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-card>

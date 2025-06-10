@@ -1,0 +1,72 @@
+<p-card header="Target-wise Sales Person Ranking" styleClass="ranking-card">
+  <p-table [value]="rankingData" [paginator]="true" [rows]="10" 
+           [showCurrentPageReport]="true" responsiveLayout="scroll"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [tableStyle]="{'min-width': '50rem'}">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Rank</th>
+        <th>Sales Person</th>
+        <th>Target</th>
+        <th>Progress</th>
+        <th>Status</th>
+        <th>Performance</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-person let-rowIndex="rowIndex">
+      <tr>
+        <td>
+          <div class="rank-badge" [ngClass]="getRankClass(rowIndex)">
+            {{ rowIndex + 1 }}
+          </div>
+        </td>
+        <td>
+          <div class="person-info">
+            <div class="person-avatar">
+              <i class="pi pi-user"></i>
+            </div>
+            <span class="person-name">{{ person.salesPersonName }}</span>
+          </div>
+        </td>
+        <td>
+          <span class="target-amount">{{ person.Target | currency }}</span>
+        </td>
+        <td>
+          <div class="progress-container">
+            <p-progressBar 
+              [value]="person.Progress" 
+              [showValue]="true" 
+              unit="%" 
+              [ngClass]="getProgressClass(person.Progress)">
+            </p-progressBar>
+          </div>
+        </td>
+        <td>
+          <div class="status-indicator" [ngClass]="getProgressClass(person.Progress)">
+            <i class="pi" [ngClass]="getStatusIcon(person.Progress)"></i>
+            <span>{{ getStatusText(person.Progress) }}</span>
+          </div>
+        </td>
+        <td>
+          <p-tag 
+            [value]="getPerformanceLabel(person.Progress)" 
+            [severity]="getProgressColor(person.Progress)">
+          </p-tag>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center">
+          <div class="empty-state">
+            <i class="pi pi-info-circle"></i>
+            <p>No sales person data available</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

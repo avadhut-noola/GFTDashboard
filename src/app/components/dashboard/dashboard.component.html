@@ -1,0 +1,37 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Client Reporting Dashboard</h1>
+    <p class="dashboard-subtitle">Comprehensive sales and customer analytics</p>
+  </div>
+
+  <div class="grid" *ngIf="!loading">
+    <!-- Sales Report Overview -->
+    <div class="col-12">
+      <app-sales-report-overview [salesData]="salesReportData"></app-sales-report-overview>
+    </div>
+
+    <!-- Moving Items Section -->
+    <div class="col-12 lg:col-6">
+      <app-moving-items-section 
+        [fastMovingItems]="fastMovingItems"
+        [slowMovingItems]="slowMovingItems">
+      </app-moving-items-section>
+    </div>
+
+    <!-- Customer Analytics -->
+    <div class="col-12 lg:col-6">
+      <app-customer-analytics [customerData]="customerAnalytics"></app-customer-analytics>
+    </div>
+
+    <!-- Sales Person Ranking -->
+    <div class="col-12">
+      <app-sales-person-ranking [rankingData]="salesPersonRanking"></app-sales-person-ranking>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <p-progressSpinner></p-progressSpinner>
+    <p>Loading dashboard data...</p>
+  </div>
+</div>

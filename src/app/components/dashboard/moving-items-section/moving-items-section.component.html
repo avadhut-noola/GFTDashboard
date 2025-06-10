@@ -1,0 +1,45 @@
+<div class="moving-items-container">
+  <!-- Fast Moving Items -->
+  <p-card header="Top 5 Fast Moving Items" styleClass="moving-items-card fast-moving">
+    <div class="items-list">
+      <div class="item-card" *ngFor="let item of fastMovingItems; let i = index">
+        <div class="item-rank">
+          <span class="rank-number">{{ i + 1 }}</span>
+        </div>
+        <div class="item-content">
+          <h4>{{ item.itemName }}</h4>
+          <p class="item-number">{{ item.itemNumber }}</p>
+          <div class="sales-quantity">
+            <i class="pi pi-arrow-up"></i>
+            <span>{{ item.salesQuantity | number:'1.2-2' }} units</span>
+          </div>
+        </div>
+        <div class="item-icon fast">
+          <i class="pi pi-trending-up"></i>
+        </div>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Slow Moving Items -->
+  <p-card header="Top 5 Slow Moving Items" styleClass="moving-items-card slow-moving">
+    <div class="items-list">
+      <div class="item-card" *ngFor="let item of slowMovingItems; let i = index">
+        <div class="item-rank">
+          <span class="rank-number">{{ i + 1 }}</span>
+        </div>
+        <div class="item-content">
+          <h4>{{ item.itemName }}</h4>
+          <p class="item-number">{{ item.itemNumber }}</p>
+          <div class="sales-quantity">
+            <i class="pi pi-arrow-down"></i>
+            <span>{{ item.salesQuantity | number:'1.2-2' }} units</span>
+          </div>
+        </div>
+        <div class="item-icon slow">
+          <i class="pi pi-trending-down"></i>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>

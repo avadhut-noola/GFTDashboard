@@ -1,50 +1,125 @@
-<div class="customer-analytics-container">
-  <!-- Top 5 Customers Pie Chart -->
-  <p-card header="Top 5 Customers by Revenue" styleClass="chart-card">
-    <div class="chart-container" *ngIf="topCustomers.length > 0">
-      <canvas #pieChart></canvas>
-    </div>
-    <div class="no-data" *ngIf="topCustomers.length === 0">
-      <i class="pi pi-info-circle"></i>
-      <p>No customer data available</p>
-    </div>
-    <div class="chart-summary" *ngIf="topCustomers.length > 0">
-      <div class="summary-item" *ngFor="let customer of topCustomers; let i = index">
-        <div class="color-indicator" [style.background-color]="getChartColor(i)"></div>
-        <span class="customer-name">{{ customer.customerName }}</span>
-        <span class="customer-amount">{{ customer.totalAmount | currency }}</span>
-      </div>
-    </div>
-  </p-card>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Client Reporting Dashboard</h1>
+    <p class="dashboard-subtitle">Comprehensive sales and customer analytics</p>
+  </div>
 
-  <!-- Low Moving Customers List -->
-  <p-card header="Low Moving Customers" styleClass="low-customers-card">
-    <div class="customers-list" *ngIf="lowMovingCustomers.length > 0">
-      <div class="customer-item" *ngFor="let customer of lowMovingCustomers; let i = index">
-        <div class="customer-rank">
-          <span class="rank-number">{{ i + 1 }}</span>
-        </div>
-        <div class="customer-details">
-          <h4>{{ customer.customerName }}</h4>
-          <div class="customer-stats">
-            <div class="stat-item">
-              <i class="pi pi-shopping-cart"></i>
-              <span>{{ customer.totalPlaceOrder }} orders</span>
+  <div class="grid" *ngIf="!loading">
+    <!-- 1. Sales Report Overview -->
+    <div class="col-12">
+      <app-sales-report-overview [salesData]="salesReportData"></app-sales-report-overview>
+    </div>
+
+    <!-- 2. Top 5 Fast Moving Items -->
+    <div class="col-12 lg:col-6">
+      <p-card header="Top 5 Fast Moving Items" styleClass="moving-items-card fast-moving">
+        <div class="items-list">
+          <div class="item-card" *ngFor="let item of fastMovingItems; let i = index">
+            <div class="item-rank">
+              <span class="rank-number">{{ i + 1 }}</span>
             </div>
-            <div class="stat-item">
-              <i class="pi pi-dollar"></i>
-              <span>{{ customer.totalAmount | currency }}</span>
+            <div class="item-content">
+              <h4>{{ item.itemName }}</h4>
+              <p class="item-number">{{ item.itemNumber }}</p>
+              <div class="sales-quantity">
+                <i class="pi pi-arrow-up"></i>
+                <span>{{ item.salesQuantity | number:'1.2-2' }} units</span>
+              </div>
+            </div>
+            <div class="item-icon fast">
+              <i class="pi pi-trending-up"></i>
             </div>
           </div>
         </div>
-        <div class="customer-status">
-          <p-tag value="Low Activity" severity="warning"></p-tag>
+      </p-card>
+    </div>
+
+    <!-- 3. Top 5 Slow Moving Items -->
+    <div class="col-12 lg:col-6">
+      <p-card header="Top 5 Slow Moving Items" styleClass="moving-items-card slow-moving">
+        <div class="items-list">
+          <div class="item-card" *ngFor="let item of slowMovingItems; let i = index">
+            <div class="item-rank">
+              <span class="rank-number">{{ i + 1 }}</span>
+            </div>
+            <div class="item-content">
+              <h4>{{ item.itemName }}</h4>
+              <p class="item-number">{{ item.itemNumber }}</p>
+              <div class="sales-quantity">
+                <i class="pi pi-arrow-down"></i>
+                <span>{{ item.salesQuantity | number:'1.2-2' }} units</span>
+              </div>
+            </div>
+            <div class="item-icon slow">
+              <i class="pi pi-trending-down"></i>
+            </div>
+          </div>
         </div>
-      </div>
+      </p-card>
     </div>
-    <div class="no-data" *ngIf="lowMovingCustomers.length === 0">
-      <i class="pi pi-info-circle"></i>
-      <p>No low moving customer data available</p>
+
+    <!-- 4. Top 5 Customers by Revenue -->
+    <div class="col-12 lg:col-6">
+      <p-card header="Top 5 Customers by Revenue" styleClass="chart-card">
+        <div class="chart-container" *ngIf="topCustomers.length > 0">
+          <canvas #pieChart></canvas>
+        </div>
+        <div class="no-data" *ngIf="topCustomers.length === 0">
+          <i class="pi pi-info-circle"></i>
+          <p>No customer data available</p>
+        </div>
+        <div class="chart-summary" *ngIf="topCustomers.length > 0">
+          <div class="summary-item" *ngFor="let customer of topCustomers; let i = index">
+            <div class="color-indicator" [style.background-color]="getChartColor(i)"></div>
+            <span class="customer-name">{{ customer.customerName }}</span>
+            <span class="customer-amount">{{ customer.totalAmount | currency }}</span>
+          </div>
+        </div>
+      </p-card>
     </div>
-  </p-card>
+
+    <!-- 5. Low Moving Customers -->
+    <div class="col-12 lg:col-6">
+      <p-card header="Low Moving Customers" styleClass="low-customers-card">
+        <div class="customers-list" *ngIf="lowMovingCustomers.length > 0">
+          <div class="customer-item" *ngFor="let customer of lowMovingCustomers; let i = index">
+            <div class="customer-rank">
+              <span class="rank-number">{{ i + 1 }}</span>
+            </div>
+            <div class="customer-details">
+              <h4>{{ customer.customerName }}</h4>
+              <div class="customer-stats">
+                <div class="stat-item">
+                  <i class="pi pi-shopping-cart"></i>
+                  <span>{{ customer.totalPlaceOrder }} orders</span>
+                </div>
+                <div class="stat-item">
+                  <i class="pi pi-dollar"></i>
+                  <span>{{ customer.totalAmount | currency }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="customer-status">
+              <p-tag value="Low Activity" severity="warning"></p-tag>
+            </div>
+          </div>
+        </div>
+        <div class="no-data" *ngIf="lowMovingCustomers.length === 0">
+          <i class="pi pi-info-circle"></i>
+          <p>No low moving customer data available</p>
+        </div>
+      </p-card>
+    </div>
+
+    <!-- Sales Person Ranking -->
+    <div class="col-12">
+      <app-sales-person-ranking [rankingData]="salesPersonRanking"></app-sales-person-ranking>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <p-progressSpinner></p-progressSpinner>
+    <p>Loading dashboard data...</p>
+  </div>
 </div>

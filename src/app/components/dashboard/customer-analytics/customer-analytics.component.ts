@@ -1,38 +1,64 @@
-import { Component, Input, OnChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { DashboardService } from '../../services/dashboard.service';
 import { Chart, ChartConfiguration, ChartType } from 'chart.js';
 
 @Component({
-  selector: 'app-customer-analytics',
-  templateUrl: './customer-analytics.component.html',
-  styleUrls: ['./customer-analytics.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class CustomerAnalyticsComponent implements OnChanges, AfterViewInit {
-  @Input() customerData: any[] = [];
+export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('pieChart', { static: false }) pieChart!: ElementRef;
   
-  chart: Chart | null = null;
+  salesReportData: any[] = [];
+  fastMovingItems: any[] = [];
+  slowMovingItems: any[] = [];
+  salesPersonRanking: any[] = [];
+  customerAnalytics: any[] = [];
   topCustomers: any[] = [];
   lowMovingCustomers: any[] = [];
+  loading = true;
   
+  chart: Chart | null = null;
   private chartColors = ['#667eea', '#f093fb', '#4facfe', '#43e97b', '#fa709a'];
 
-  ngOnChanges() {
-    this.processCustomerData();
-    if (this.pieChart) {
-      this.updateChart();
-    }
+  constructor(private dashboardService: DashboardService) {}
+
+  ngOnInit() {
+    this.loadDashboardData();
   }
 
   ngAfterViewInit() {
-    // Add a small delay to ensure the canvas is rendered
     setTimeout(() => {
       this.updateChart();
     }, 100);
   }
 
+  async loadDashboardData() {
+    try {
+      this.loading = true;
+      
+      this.salesReportData = await this.dashboardService.getSalesReport();
+      this.fastMovingItems = await this.dashboardService.getFastMovingItems();
+      this.slowMovingItems = await this.dashboardService.getSlowMovingItems();
+      this.salesPersonRanking = await this.dashboardService.getSalesPersonRanking();
+      this.customerAnalytics = await this.dashboardService.getCustomerAnalytics();
+      
+      this.processCustomerData();
+      
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+    } finally {
+      this.loading = false;
+      setTimeout(() => {
+        this.updateChart();
+      }, 100);
+    }
+  }
+
   processCustomerData() {
-    if (this.customerData.length > 0) {
-      const sortedData = [...this.customerData].sort((a, b) => b.totalAmount - a.totalAmount);
+    if (this.customerAnalytics.length > 0) {
+      const sortedData = [...this.customerAnalytics].sort((a, b) => b.totalAmount - a.totalAmount);
       this.topCustomers = sortedData.slice(0, 5);
       this.lowMovingCustomers = sortedData.slice(-5).reverse();
     }

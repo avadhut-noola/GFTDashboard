@@ -34,25 +34,8 @@ ng serve
 
 ## Project Structure
 
-
-src/
-├── app/
-│   ├── components/
-│   │   └── dashboard/
-│   │       ├── dashboard.component.*
-│   │       ├── sales-report-overview/
-│   │       ├── moving-items-section/
-│   │       ├── sales-person-ranking/
-│   │       └── customer-analytics/
-│   ├── services/
-│   │   └── dashboard.service.ts
-│   ├── app.component.*
-│   ├── app.module.ts
-│   └── app-routing.module.ts
-├── styles.scss
-└── index.html
-
-
+<pre lang="markdown"> ```text src/ ├── app/ │ ├── components/ │ │ └── dashboard/ │ │ ├── dashboard.component.* │ │ ├── sales-report-overview/ │ │ ├── moving-items-section/ │ │ ├── sales-person-ranking/ │ │ └── customer-analytics/ │ ├── services/ │ │ └── dashboard.service.ts │ ├── app.component.* │ ├── app.module.ts │ └── app-routing.module.ts ├── styles.scss └── index.html ``` </pre>
+  
 ## API Integration
 
 The dashboard is designed to work with the following API endpoints:

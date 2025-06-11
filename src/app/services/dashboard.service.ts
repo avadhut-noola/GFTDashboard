@@ -74,7 +74,7 @@ export class DashboardService {
     await this.delay(900);
     
     return [
-      { customerName: "TechCorp Industries", totalPlaceOrder: "45", totalAmount: 125000.75 },
+      { customerName: "TechCorp Industries", totalPlaceOrder: "45", totalAmount: 225000.75 },
       { customerName: "Global Solutions Ltd", totalPlaceOrder: "38", totalAmount: 98500.50 },
       { customerName: "Innovation Systems", totalPlaceOrder: "42", totalAmount: 87200.25 },
       { customerName: "Future Dynamics", totalPlaceOrder: "35", totalAmount: 76800.90 },
